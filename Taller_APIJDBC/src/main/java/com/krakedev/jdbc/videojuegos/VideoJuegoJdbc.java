@@ -51,6 +51,46 @@ public class VideoJuegoJdbc {
         return null;
     }
     
+    public static List<VideoJuego> listar() {
+		
+		List<VideoJuego> videojuego = new ArrayList<>(); 
+		Connection con = null;
+		
+		try {
+			
+			con = Conexion.getConnection();
+			
+			String sql = """ 
+				 	     SELECT codigo, nombre, plataforma, precio, disponible, genero
+						 FROM public.videojuegos;
+				         """;
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery(); // Siempre se debe ejecutar
+			
+			while(rs.next()) { // Recuperamos los datos mientras existan
+				
+				VideoJuego vj = new VideoJuego(rs.getString("codigo"), rs.getString("nombre"), rs.getString("plataforma"), rs.getInt("precio"), rs.getBoolean("disponible"), rs.getString("genero"));
+				videojuego.add(vj);
+			}
+
+		}catch(Exception e) {
+			
+			log.error("Error al listar" ,e.getMessage());
+			
+		}finally {
+			try {
+				con.close();
+				log.info("Conexion Cerrada");
+			} catch (SQLException e) {
+				log.error("Error de Conexion");
+			}
+			
+		}
+		
+		return videojuego;
+		
+	}
+    
    
  
 
