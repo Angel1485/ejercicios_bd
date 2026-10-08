@@ -91,6 +91,53 @@ public class VideoJuegoJdbc {
 		
 	}
     
+public static VideoJuego buscar(String cedula) {
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = "";
+		ResultSet rs = null;
+		VideoJuego videojuego =  null;
+		
+		try {
+			
+			con = Conexion.getConnection();
+			
+			sql = """ 
+		 	      SELECT * FROM public.videojuegos
+		 	      WHERE codigo = ?;
+		          """;
+			
+			ps = con.prepareStatement(sql);	
+			ps.setString(1, cedula);
+			rs = ps.executeQuery(); // Siempre se debe ejecutar
+			
+			if (rs.next()) {  //Devuelve verdadero o falso
+				
+				videojuego = new VideoJuego(rs.getString("codigo"), rs.getString("nombre"), rs.getString("plataforma"), rs.getInt("precio"), rs.getBoolean("disponible"), rs.getString("genero"));
+				
+			}
+
+		}catch(Exception e) {
+			
+			log.error("Error al buscar el codigo" ,e.getMessage());
+			
+		}finally {
+			try {
+				con.close();
+				rs.close();
+				ps.close();
+				log.info("Conexion Cerrada");
+			} catch (SQLException e) {
+				log.error("Error de Conexion");
+			}
+			
+		}
+		
+		return videojuego;
+		
+	}
+    
    
  
 
