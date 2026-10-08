@@ -9,3 +9,14 @@ create table clientes(
     edad INT not null,
     constraint clientes_pk primary key(cedula)
 );
+
+
+
+select * from clientes
+
+
+select * from estudiantes
+
+
+INSERT INTO clientes (cedula, nombre, apellido, edad) VALUES
+('0167890123', 'Sofía',  'Hernández', 31)

@@ -65,7 +65,7 @@ SELECT *
 FROM estudiantes 
 WHERE fecha_registro BETWEEN '2026-01-01' AND '2026-04-30';
 
--- Paso 5 — UPDATE — Mínimo 5
+-- Paso 5 — UPDATE — Minimo 5
 
 -- 1. Cambiar curso
 UPDATE estudiantes SET curso = 'Inteligencia Artificial' WHERE id_estudiante = 1;
@@ -82,7 +82,7 @@ UPDATE estudiantes SET nombres = 'Juan Carlos', apellidos = 'Perez Lopez' WHERE 
 -- 5. Cambiar curso y edad a la vez
 UPDATE estudiantes SET curso = 'Redes', edad = 27 WHERE id_estudiante = 13;
 
--- Paso 6 — DELETE — Mínimo 5
+-- Paso 6 — DELETE — Minimo 5
 
 -- 1. Eliminar por ID
 DELETE FROM estudiantes WHERE id_estudiante = 15;
@@ -121,7 +121,7 @@ UPDATE estudiantes SET correo = 'carlos.ramirez@gmail.com' WHERE id_estudiante =
 
 SELECT nombres, apellidos, correo FROM estudiantes;
 
-SELECT * FROM estudiantes WHERE correo LIKE '%gmail%';  ---Busca una palabara especifica dentro de una columna y devuelve todos los valores
+SELECT * FROM estudiantes WHERE correo LIKE '%gmail%';  --- Busca una palabara especifica dentro de una columna y devuelve todos los valores
 
 -- Paso 9 — Consultas con fechas
 
@@ -139,3 +139,33 @@ SELECT * FROM estudiantes WHERE fecha_registro = '2026-03-15';
 
 -- 5. Curso "Programacion" registrados después de 2026-01-01
 SELECT * FROM estudiantes WHERE curso = 'Programacion' AND fecha_registro > '2026-01-01';
+
+
+
+CREATE TABLE clientes (
+    cedula char (10) PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    edad INT NOT NULL
+);
+
+select * from clientes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
