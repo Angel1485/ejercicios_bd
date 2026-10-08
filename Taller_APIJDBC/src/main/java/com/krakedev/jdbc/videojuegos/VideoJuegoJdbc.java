@@ -137,6 +137,55 @@ public static VideoJuego buscar(String cedula) {
 		return videojuego;
 		
 	}
+
+	public static VideoJuego actualizar(String codigo, String nuevoNombre,String nuevaPlataforma, int nuevoPrecio, boolean nuevoDisponible, String nuevoGenero) {
+	
+	Connection con = null;
+	PreparedStatement ps = null;
+	String sql = "";
+	VideoJuego videojuego =  null;
+	
+	try {
+		
+		con = Conexion.getConnection();
+		
+		sql = """ 
+			  UPDATE public.videojuegos
+			  SET nombre=?, plataforma=?, precio=?, disponible=?, genero=?
+			  WHERE codigo=?;
+		      """;
+		
+		ps = con.prepareStatement(sql);	
+		ps.setString(1, nuevoNombre);
+		ps.setString(2, nuevaPlataforma);
+		ps.setInt(3, nuevoPrecio);
+		ps.setBoolean(4, nuevoDisponible);
+		ps.setString(5, nuevoGenero);
+		ps.setString(6, codigo);
+		
+		int filas = ps.executeUpdate();
+		videojuego = new VideoJuego(codigo, nuevoNombre, nuevaPlataforma, nuevoPrecio, nuevoDisponible, nuevoGenero); //Cargo el cliente con los nuevos datos
+		
+		log.info("Filas actualziadas: " + filas);
+		
+	}catch(Exception e) {
+		
+		log.error("Error al buscar la cedula" ,e.getMessage());
+		
+	}finally {
+		try {
+			con.close();
+			ps.close();
+			log.info("Conexion Cerrada");
+		} catch (SQLException e) {
+			log.error("Error de Conexion");
+		}
+		
+	}
+	
+	return videojuego;
+	
+}
     
    
  
