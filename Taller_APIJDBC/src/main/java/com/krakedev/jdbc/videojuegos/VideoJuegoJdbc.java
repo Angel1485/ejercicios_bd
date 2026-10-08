@@ -140,53 +140,92 @@ public static VideoJuego buscar(String cedula) {
 
 	public static VideoJuego actualizar(String codigo, String nuevoNombre,String nuevaPlataforma, int nuevoPrecio, boolean nuevoDisponible, String nuevoGenero) {
 	
-	Connection con = null;
-	PreparedStatement ps = null;
-	String sql = "";
-	VideoJuego videojuego =  null;
-	
-	try {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = "";
+		VideoJuego videojuego =  null;
 		
-		con = Conexion.getConnection();
-		
-		sql = """ 
-			  UPDATE public.videojuegos
-			  SET nombre=?, plataforma=?, precio=?, disponible=?, genero=?
-			  WHERE codigo=?;
-		      """;
-		
-		ps = con.prepareStatement(sql);	
-		ps.setString(1, nuevoNombre);
-		ps.setString(2, nuevaPlataforma);
-		ps.setInt(3, nuevoPrecio);
-		ps.setBoolean(4, nuevoDisponible);
-		ps.setString(5, nuevoGenero);
-		ps.setString(6, codigo);
-		
-		int filas = ps.executeUpdate();
-		videojuego = new VideoJuego(codigo, nuevoNombre, nuevaPlataforma, nuevoPrecio, nuevoDisponible, nuevoGenero); //Cargo el cliente con los nuevos datos
-		
-		log.info("Filas actualziadas: " + filas);
-		
-	}catch(Exception e) {
-		
-		log.error("Error al buscar la cedula" ,e.getMessage());
-		
-	}finally {
 		try {
-			con.close();
-			ps.close();
-			log.info("Conexion Cerrada");
-		} catch (SQLException e) {
-			log.error("Error de Conexion");
+			
+			con = Conexion.getConnection();
+			
+			sql = """ 
+				  UPDATE public.videojuegos
+				  SET nombre=?, plataforma=?, precio=?, disponible=?, genero=?
+				  WHERE codigo=?;
+			      """;
+			
+			ps = con.prepareStatement(sql);	
+			ps.setString(1, nuevoNombre);
+			ps.setString(2, nuevaPlataforma);
+			ps.setInt(3, nuevoPrecio);
+			ps.setBoolean(4, nuevoDisponible);
+			ps.setString(5, nuevoGenero);
+			ps.setString(6, codigo);
+			
+			int filas = ps.executeUpdate();
+			videojuego = new VideoJuego(codigo, nuevoNombre, nuevaPlataforma, nuevoPrecio, nuevoDisponible, nuevoGenero); //Cargo el cliente con los nuevos datos
+			
+			log.info("Filas actualziadas: " + filas);
+			
+		}catch(Exception e) {
+			
+			log.error("Error al buscar la cedula" ,e.getMessage());
+			
+		}finally {
+			try {
+				con.close();
+				ps.close();
+				log.info("Conexion Cerrada");
+			} catch (SQLException e) {
+				log.error("Error de Conexion");
+			}
+			
 		}
 		
+		return videojuego;
+	
 	}
-	
-	return videojuego;
-	
-}
     
+	public static boolean eliminar(String codigo) {
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = "";
+		VideoJuego videoJuego =  null;
+		
+		try {
+			
+			con = Conexion.getConnection();
+			
+			sql = """ 
+			      DELETE FROM public.videojuegos
+				  WHERE codigo=?;
+			      """;
+			
+			ps = con.prepareStatement(sql);	
+			ps.setString(1, codigo);
+			
+			int filas = ps.executeUpdate();
+			log.info("Filas eliminadas: " + filas);
+			return true;
+		}catch(Exception e) {
+			
+			log.error("Error al eliminar" ,e.getMessage());
+			return false;
+			
+		}finally {
+			try {
+				con.close();
+				ps.close();
+				log.info("Conexion Cerrada");
+			} catch (SQLException e) {
+				log.error("Error de Conexion");
+			}
+			
+		}
+				
+	}
    
  
 
