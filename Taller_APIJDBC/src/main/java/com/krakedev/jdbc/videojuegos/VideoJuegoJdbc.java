@@ -11,10 +11,11 @@ public class VideoJuegoJdbc {
     private static final Logger log = LoggerFactory.getLogger(VideoJuegoJdbc.class);
 
     //Insertar
-    public static VideoJuego insertar(VideoJuego videojuego) {
+    public static VideoJuego insertar(String codigo, String nombre, String plataforma ,double precio, boolean disponible, String genero) {
     	
     	Connection con = null;
         PreparedStatement ps = null;
+        VideoJuego videojuego = null;
 
         try {
             con = Conexion.getConnection();
@@ -26,12 +27,14 @@ public class VideoJuegoJdbc {
         		    """;
             
             ps = con.prepareStatement(sql);
-            ps.setString(1, videojuego.getCodigo());
-            ps.setString(2, videojuego.getNombre());
-            ps.setString(3, videojuego.getPlataforma());
-            ps.setDouble(4, videojuego.getPrecio());
-            ps.setBoolean(5, videojuego.isDisponible());
-            ps.setString(6, videojuego.getGenero());
+            ps.setString(1, codigo);
+            ps.setString(2, nombre);
+            ps.setString(3, plataforma);
+            ps.setDouble(4, precio);
+            ps.setBoolean(5, disponible);
+            ps.setString(6, genero);
+            
+            videojuego =  new VideoJuego(codigo, nombre, plataforma, precio, disponible, genero);
 
             int filas = ps.executeUpdate();
             if (filas > 0) {
@@ -138,7 +141,7 @@ public static VideoJuego buscar(String cedula) {
 		
 	}
 
-	public static VideoJuego actualizar(String codigo, String nuevoNombre,String nuevaPlataforma, int nuevoPrecio, boolean nuevoDisponible, String nuevoGenero) {
+	public static VideoJuego actualizar(String codigo, String nuevoNombre,String nuevaPlataforma, double nuevoPrecio, boolean nuevoDisponible, String nuevoGenero) {
 	
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -158,7 +161,7 @@ public static VideoJuego buscar(String cedula) {
 			ps = con.prepareStatement(sql);	
 			ps.setString(1, nuevoNombre);
 			ps.setString(2, nuevaPlataforma);
-			ps.setInt(3, nuevoPrecio);
+			ps.setDouble(3, nuevoPrecio);
 			ps.setBoolean(4, nuevoDisponible);
 			ps.setString(5, nuevoGenero);
 			ps.setString(6, codigo);
@@ -226,7 +229,6 @@ public static VideoJuego buscar(String cedula) {
 		}
 				
 	}
-   
  
 
 }
