@@ -79,6 +79,7 @@ public class VideoJuegoJdbc {
 		}catch(Exception e) {
 			
 			log.error("Error al listar" ,e.getMessage());
+			e.printStackTrace(); 
 			
 		}finally {
 			try {

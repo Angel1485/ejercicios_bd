@@ -9,7 +9,7 @@ public class Conexion {
 	
 	//Dependiendo la Bd a usar se utilizan los diferentes usuarios
 	private static final Logger log = LogManager.getLogger(Conexion.class);
-	private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
+	private static final String URL = "jdbc:postgresql://localhost:5432/apijdbc";
 	private static final String USER = "postgres";
 	private static final String PASSWORD = "Angel";
 
