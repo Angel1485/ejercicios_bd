@@ -23,19 +23,23 @@ public class Pelicula {
 
 	    @Column(nullable = false)
 	    private boolean disponible;
+	    
+	    @Column(nullable = false)
+	    private double calificacion;
 
 	    // Constructor vacio
 	    public Pelicula() {
 	    }
 
 	    // Constructor con parametros
-	    public Pelicula(Long id, String nombre, String director, String genero, int duracion, boolean disponible) {
+	    public Pelicula(Long id, String nombre, String director, String genero, int duracion, boolean disponible, double calificacion) {
 	        this.id = id;
 	        this.nombre = nombre;
 	        this.director = director;
 	        this.genero = genero;
 	        this.duracion = duracion;
 	        this.disponible = disponible;
+	        this.calificacion = calificacion;
 	    }
 	    
 	 // Getters y Setters
@@ -87,11 +91,19 @@ public class Pelicula {
 		public void setDisponible(boolean disponible) {
 			this.disponible = disponible;
 		}
+		
+		public double getCalificacion() {
+			return calificacion;
+		}
+
+		public void setCalificacion(double calificacion) {
+			this.calificacion = calificacion;
+		}
 
 		@Override
 		public String toString() {
 			return "Pelicula [id=" + id + ", nombre=" + nombre + ", director=" + director + ", genero=" + genero
-					+ ", duracion=" + duracion + ", disponible=" + disponible + "]";
+					+ ", duracion=" + duracion + ", disponible=" + disponible + ", calificacion=" + calificacion + "]";
 		}
-	  
+
 }
