@@ -1,0 +1,48 @@
+-- Crear base de datos (opcional, para pruebas locales)
+CREATE DATABASE IF NOT EXISTS fitzone_api;
+USE fitzone_api;
+
+-- 1 Creacion de tabla
+CREATE TABLE socios (
+    id_socio       INT PRIMARY KEY,
+    nombres        VARCHAR(50)  NOT NULL,
+    apellidos      VARCHAR(50)  NOT NULL,
+    edad           INT          NOT NULL,
+    fecha_registro VARCHAR(10)  NOT NULL,  -- Formato YYYY-MM-DD
+    activo         BOOLEAN      NOT NULL
+);
+
+-- 2 Ingreso de datos
+INSERT INTO socios (id_socio, nombres, apellidos, edad, fecha_registro, activo) VALUES
+(1, 'Carlos',   'Mendoza',   25, '2026-01-15', TRUE),
+(2, 'Lucía',    'Ramírez',   17, '2026-02-20', TRUE),
+(3, 'Andrés',   'Torres',    32, '2026-03-10', FALSE),
+(4, 'Valeria',  'Gómez',     15, '2026-04-05', TRUE),
+(5, 'Miguel',   'Salazar',   40, '2026-05-18', FALSE);
+
+--3 Consultas
+
+-- Consulta 1: nombres, apellidos y edad de socios activos mayores de 18 años
+SELECT nombres, apellidos, edad
+FROM socios
+WHERE activo = TRUE AND edad > 18;
+
+-- Consulta 2: socios registrados después de '2026-02-01'
+SELECT *
+FROM socios
+WHERE fecha_registro > '2026-02-01';
+
+-- Consulta 3: todos los socios ordenados por edad de mayor a menor
+SELECT *
+FROM socios
+ORDER BY edad DESC;
+
+-- Actualizacion de tabla
+
+-- 4.1 Agregar columna email
+ALTER TABLE socios ADD COLUMN email VARCHAR(100);
+
+-- 4.2 Asignar correo a un socio por id_socio
+UPDATE socios
+SET email = 'carlos.mendoza@example.com'
+WHERE id_socio = 1;
