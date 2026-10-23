@@ -1,5 +1,7 @@
 package com.krakedev.jwt.entidades;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +16,7 @@ public class Usuario {
     private String username;
 
     @Column(nullable = false, length = 100)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  //Se añade para que no muestre la contraseña hash en el Json 
     private String password;
 
     @Column(nullable = false, length = 20)

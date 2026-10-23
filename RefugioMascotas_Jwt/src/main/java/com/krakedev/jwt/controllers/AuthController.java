@@ -39,7 +39,7 @@ public class AuthController {
         String username = credenciales.get("username");
         String password = credenciales.get("password");
         
-        boolean autenticado = usuarioService.autenticarToF(username, password);
+        boolean autenticado = usuarioService.autenticar(username, password);
         
         if (autenticado) {
 			Usuario usuario = usuarioRepository.findByUsername(username).get();
@@ -69,8 +69,21 @@ public class AuthController {
         String usuario = datosToken.getSubject();
         String rol = datosToken.getClaim("rol").asString();
         
+      //Mensaje diferencia segun el rol
+        String mensaje;
+        switch (rol == null ? "" : rol.toUpperCase()) {
+            case "ADMIN":
+                mensaje = "Bienvenido Administrador. Tienes permisos totales para gestionar usuarios, rescates y adopciones.";
+                break;
+            case "USER":
+                mensaje = "Bienvenido Voluntario del Refugio. Tienes permisos para gestionar rescates y adopciones.";
+                break;
+            default:
+                mensaje = "Bienvenido. Tu rol no tiene permisos especiales asignados.";
+        }
+        
         return ResponseEntity.ok(Map.of(
-            "Mensaje", "Bienvenido Voluntario del Refugio. Tienes permisos para gestionar rescates y adopciones.",
+            "Mensaje", mensaje,
             "Usuario", usuario,
             "Rol", rol,
             "estatus", "Autenticado Exitosamente"
