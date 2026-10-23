@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.krakedev.jwt.entidades.Usuario;
 import com.krakedev.jwt.services.UsuarioService;
-import com.krakedev.jwt.JwtUtil;
+import com.krakedev.jwt.utils.JwtUtil;
 import com.krakedev.jwt.repositories.UsuarioRepository;
 
 import java.util.*;
