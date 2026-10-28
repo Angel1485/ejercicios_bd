@@ -20,6 +20,10 @@ public class Tarea {
 
     @Column(nullable = false)
     private double costoEstimado;
+    
+    //@Column(nullable = false, length = 30)
+    @Column(length = 30)
+    private String estado;
 
     // Relacion Muchos a Uno con Proyecto
     @ManyToOne
@@ -29,19 +33,20 @@ public class Tarea {
     // Relacion Muchos a Muchos con Empleado (tabla intermedia)
     @ManyToMany
     @JoinTable(
-        name = "tarea_empleados",
-        joinColumns = @JoinColumn(name = "tarea_id"),
-        inverseJoinColumns = @JoinColumn(name = "empleado_id")
+        name = "tarea_empleados",                              // Nombre de la tabla intermedia
+        joinColumns = @JoinColumn(name = "tarea_id"),          // FK a esta entidad (Tarea)
+        inverseJoinColumns = @JoinColumn(name = "empleado_id") // FK a la otra entidad (Empleado)
     )
     private List<Empleado> empleados;
 
 	public Tarea() {
 	}
 
-	public Tarea(String descripcion, LocalDate fechaLimite, double costoEstimado, Proyecto proyecto, List<Empleado> empleados) {
+	public Tarea(String descripcion, LocalDate fechaLimite, double costoEstimado, String estado, Proyecto proyecto, List<Empleado> empleados) {
 		this.descripcion = descripcion;
 		this.fechaLimite = fechaLimite;
 		this.costoEstimado = costoEstimado;
+		this.estado = estado;
 		this.proyecto = proyecto;
 		this.empleados = empleados;
 	}
@@ -94,4 +99,12 @@ public class Tarea {
 		this.empleados = empleados;
 	}
 
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	
 }

@@ -2,6 +2,7 @@ package com.krakedev.proyectos.controllers;
 
 import java.util.*;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.krakedev.proyectos.entidades.Tarea;
 import com.krakedev.proyectos.services.TareaService;
@@ -17,6 +18,7 @@ public class TareaController {
 	}
 
 	// POST /api/tareas — recibe tarea con proyecto.id y empleados[].id
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> crear(@RequestBody Tarea tarea) {
         try {
@@ -29,6 +31,7 @@ public class TareaController {
     }
 
     // GET /api/tareas
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
     public ResponseEntity<?> listar() {
         try {

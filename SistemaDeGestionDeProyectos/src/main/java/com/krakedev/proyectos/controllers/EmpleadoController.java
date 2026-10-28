@@ -2,6 +2,7 @@ package com.krakedev.proyectos.controllers;
 
 import java.util.*;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.krakedev.proyectos.entidades.Empleado;
 import com.krakedev.proyectos.services.EmpleadoService;
@@ -29,6 +30,7 @@ public class EmpleadoController {
     }
 
     // GET /api/empleados
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
     public ResponseEntity<?> listar() {
         try {

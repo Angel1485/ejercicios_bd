@@ -2,6 +2,7 @@ package com.krakedev.proyectos.controllers;
 
 import java.util.*;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.krakedev.proyectos.entidades.Proyecto;
 import com.krakedev.proyectos.services.ProyectoService;
@@ -17,6 +18,7 @@ public class ProyectoController {
 	}
 
 	// POST /api/proyectos
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> crear(@RequestBody Proyecto proyecto) {
         try {
@@ -29,7 +31,8 @@ public class ProyectoController {
     }
 
     // GET /api/proyectos
-    @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @GetMapping("/listar")
     public ResponseEntity<?> listar() {
         try {
             List<Proyecto> lista = proyectoService.listar();
@@ -73,6 +76,7 @@ public class ProyectoController {
     }
 
     // DELETE /api/proyectos/{id}
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
         try {
